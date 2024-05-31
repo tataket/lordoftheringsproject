@@ -1,0 +1,26 @@
+version: "3.9"
+
+networks:
+  lotr_net:
+    name: lotr_net
+    driver: bridge
+
+volumes:
+  lotr-store:
+    driver: local
+
+services:
+  database:
+    image: postgres:13
+    container_name: lotr-database
+    volumes:
+      - lotr-store:/var/lib/postgres
+    ports:
+      - "1234:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: lotr
+    networks:
+      - lotr_net
+
